@@ -1,153 +1,123 @@
-// ============================     HOMEWORK #7       ============================
+// ================== Homework #8 ==================
 
-// task 1
+const arr = [
+  16, -37, 54, -4, 72, -56, 47, 4, -16, 25, -37, 46, 4, -51, 27, -63, 4, -54,
+  76, -4, 12, -35, 4, 47,
+];
 
-console.log("task #1");
-let str = "";
-for (let i = 10; i <= 20; i++) {
-  str = i < 20 ? (str += i + ",") : (str += i);
-}
-console.log(str);
+//task 1
+
+let sum = 0;
+const taskOneArr = arr
+  .filter((x) => x > 0)
+  .map((x) => {
+    return (sum += x);
+  });
+
+alert(
+  `TASK #1\nSum of positive element from array is ${
+    taskOneArr[taskOneArr.length - 1]
+  }\nNumber of positive elements in array is ${taskOneArr.length}`
+);
 
 //task 2
 
-console.log("\ntask #2");
-str = "";
-for (let i = 10; i <= 20; i++) {
-  str = i < 20 ? (str += i ** 2 + ",") : (str += i ** 2);
-}
-console.log(str);
+let min = 0;
+const taskTwoArr = arr.map((num) => {
+  if (num < min) {
+    min = num;
+  }
+  return min;
+});
+
+alert(
+  `TASK #2\nMin element from array is ${
+    taskTwoArr[taskTwoArr.length - 1]
+  }\n It's under index ${arr.indexOf(taskTwoArr[taskTwoArr.length - 1])}`
+);
 
 //task 3
 
-console.log("\ntask #3");
+let max = 0;
+const taskThreeArr = arr.map((num) => {
+  if (num > max) {
+    max = num;
+  }
+  return max;
+});
 
-let i = 1;
-while (i < 9) {
-  console.log(`7 * ${i} = ${7 * i}`);
-  i++;
-}
+alert(
+  `TASK #3\nMax element from array is ${
+    taskThreeArr[taskThreeArr.length - 1]
+  }\n It's under index ${arr.indexOf(taskThreeArr[taskThreeArr.length - 1])}`
+);
 
 //task 4
 
-console.log("\ntask #4");
-
-let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15];
-
-let sum = 0;
-arr.forEach((number) => {
-  sum += number;
-});
-
-console.log(`Sum number from 1 to 15 = ${sum}`);
-
-//task 5
-
-console.log("\ntask #5");
-
-let productOfNumbers = 1;
-
-for (let i = 15; i <= 35; i++) {
-  productOfNumbers *= i;
-}
-console.log(`product of numbers(from 15 to 35) = ${BigInt(productOfNumbers)}`);
-
-//task 6
-
-console.log("\ntask #6");
-
-i = 1;
-sum = 0;
-while (i < 500) {
-  sum += i;
-  i++;
-}
-console.log(sum / 500 + " avg (from 1 to 500)");
-
-//task 7
-
-console.log("\ntask #7");
-
-arr = [];
-sum = 0;
-
-for (let i = 30; i <= 80; i++) {
-  arr.push(i);
-}
-
-for (let num in arr) {
-  if (arr[num] % 2 === 0) {
-    sum += arr[num];
-  }
-}
-console.log(`sum(from 30 to 80) only pair numbers = ${sum}`);
-
-//task 8
-
-console.log("\ntask #8");
-/*в задании было указано в конце ТРИ, я понял что надо сделать вывод всех чисел от 100 до 200 с шагом ТРИ.
-Так как обычный вывод уже был */
-str = "";
-for (let i = 100; i <= 200; i += 3) {
-  str += i;
-  if (i !== 199) {
-    str += ", ";
-  }
-}
-console.log(str);
-
-//task 9-11
-
-let inputNumber = prompt("Enter here a number");
-
-let listDivisors = [];
-let count = 0;
-sum = 0;
-
-while (
-  inputNumber === null ||
-  isNaN(inputNumber) ||
-  inputNumber.trim() === ""
-) {
-  inputNumber = prompt("Enter here a number");
-}
-
-inputNumber = +inputNumber;
-
-for (let i = 1; i <= inputNumber; i++) {
-  if (inputNumber % i === 0) {
-    listDivisors.push(i);
-  }
-}
-
-for (let num in listDivisors) {
-  if (listDivisors[num] % 2 === 0) {
-    count += 1;
-    sum += listDivisors[num];
-  }
-}
-
-let stringDivisors = "";
-
-for (let i = 0; i < listDivisors.length; i++) {
-  stringDivisors += listDivisors[i];
-  if (listDivisors[i] !== inputNumber) {
-    stringDivisors += ", ";
-  }
-}
-
+const taskFourArr = arr.filter((x) => x < 0);
 alert(
-  `Number: ${inputNumber}\nDivisors - ${stringDivisors}\nPair numbers of Divisors(count) = ${count}\nPair numbers of Divisors(sum) = ${sum}`
+  `TASK #4\nNumber of negetive elements fro array is ${taskFourArr.length}`
 );
 
-//task 12
-console.log("\ntask 12\n");
-let tableMultiplication = "";
+// task 5
 
-for (let i = 1; i <= 10; i++) {
-  for (let k = 1; k <= 10; k++) {
-    tableMultiplication += `${i} * ${k} = ${i * k}\n`;
+const taskFiveArr = arr.filter((x) => x > 0).filter((x) => x % 2 !== 0);
+
+alert(
+  `TASK #5\nNumbers of not pair positive elements from array = ${taskFiveArr.length}`
+);
+
+// task 6
+
+const taskSixArr = arr.filter((x) => x > 0).filter((x) => x % 2 === 0);
+
+alert(
+  `TASK #6\nNumbers of pair positive elements from array = ${taskSixArr.length}`
+);
+
+// task 7
+
+let sumPair = 0;
+
+const taskSevenArr = arr
+  .filter((x) => x > 0 && x % 2 === 0)
+  .map((number) => {
+    sumPair += number;
+  });
+
+alert(`TASK #7\nSum of positive pair numbers ${sumPair}`);
+
+// task 8
+
+let sumNoPair = 0;
+
+const taskEightArr = arr
+  .filter((x) => x > 0 && x % 2 !== 0)
+  .map((number) => {
+    sumNoPair += number;
+  });
+
+alert(`TASK #8\nSum of positive no-pair numbers ${sumNoPair}`);
+
+// task 9
+
+let product = 1;
+
+const taskNineArr = arr
+  .filter((x) => x > 0)
+  .forEach((number) => {
+    product *= number;
+  });
+
+alert(`TASK #9\nProduct of positive numbers ${product}`);
+
+// task 10
+
+const taskTenArr = arr.map((x) => {
+  if (x !== max) {
+    x = 0;
   }
-}
+  return x;
+});
 
-console.log(tableMultiplication);
+alert(`TASK #10\n${taskTenArr}`);
