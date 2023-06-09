@@ -7,117 +7,127 @@ const arr = [
 
 //task 1
 
-let sum = 0;
-const taskOneArr = arr
+const sumPositiveElem = arr
   .filter((x) => x > 0)
-  .map((x) => {
-    return (sum += x);
-  });
+  .reduce((acc, x) => {
+    return (acc += x);
+  }, 0);
+
+const countPositiveElem = arr
+  .filter((x) => x > 0)
+  .reduce((acc, x) => {
+    return (acc += 1);
+  }, 0);
 
 alert(
-  `TASK #1\nSum of positive element from array is ${
-    taskOneArr[taskOneArr.length - 1]
-  }\nNumber of positive elements in array is ${taskOneArr.length}`
+  `TASK #1\nSum of positive elements from array = ${sumPositiveElem}\nCount of positive elements = ${countPositiveElem}`
 );
 
 //task 2
 
-let min = 0;
-const taskTwoArr = arr.map((num) => {
-  if (num < min) {
-    min = num;
+const minElem = arr.reduce((acc, x) => {
+  if (x < acc) {
+    return x;
+  } else {
+    return acc;
   }
-  return min;
-});
+}, 0);
+
+const indexMinElem = arr.findIndex((x) => x === minElem);
 
 alert(
-  `TASK #2\nMin element from array is ${
-    taskTwoArr[taskTwoArr.length - 1]
-  }\n It's under index ${arr.indexOf(taskTwoArr[taskTwoArr.length - 1])}`
+  `TASK #2\nMin element from array is ${minElem}\nIt's under index ${indexMinElem}`
 );
 
 //task 3
 
-let max = 0;
-const taskThreeArr = arr.map((num) => {
-  if (num > max) {
-    max = num;
+const maxElem = arr.reduce((acc, x) => {
+  if (x > acc) {
+    return x;
+  } else {
+    return acc;
   }
-  return max;
-});
+}, 0);
+
+const indexMaxElem = arr.findIndex((x) => x === maxElem);
 
 alert(
-  `TASK #3\nMax element from array is ${
-    taskThreeArr[taskThreeArr.length - 1]
-  }\n It's under index ${arr.indexOf(taskThreeArr[taskThreeArr.length - 1])}`
+  `TASK #3\nMax element from array is ${maxElem}\nIt's under index ${indexMaxElem}`
 );
 
 //task 4
 
-const taskFourArr = arr.filter((x) => x < 0);
-alert(
-  `TASK #4\nNumber of negetive elements fro array is ${taskFourArr.length}`
-);
+const countNegativeElem = arr
+  .filter((x) => x < 0)
+  .reduce((acc, x) => {
+    return (acc += 1);
+  }, 0);
+
+alert(`TASK #4\nNumber of negetive elements fro array is ${countNegativeElem}`);
 
 // task 5
 
-const taskFiveArr = arr.filter((x) => x > 0).filter((x) => x % 2 !== 0);
+const countNoPairPositiveElem = arr
+  .filter((x) => x > 0 && x % 2 !== 0)
+  .reduce((acc, x) => {
+    return (acc += 1);
+  }, 0);
 
 alert(
-  `TASK #5\nNumbers of not pair positive elements from array = ${taskFiveArr.length}`
+  `TASK #5\nNumbers of not pair positive elements from array = ${countNoPairPositiveElem}`
 );
 
 // task 6
 
-const taskSixArr = arr.filter((x) => x > 0).filter((x) => x % 2 === 0);
+const countPairPositiveElem = arr
+  .filter((x) => x > 0 && x % 2 === 0)
+  .reduce((acc, x) => {
+    return (acc += 1);
+  });
 
 alert(
-  `TASK #6\nNumbers of pair positive elements from array = ${taskSixArr.length}`
+  `TASK #6\nNumbers of pair positive elements from array = ${countPairPositiveElem}`
 );
 
 // task 7
 
-let sumPair = 0;
-
-const taskSevenArr = arr
+const sumPairElem = arr
   .filter((x) => x > 0 && x % 2 === 0)
-  .map((number) => {
-    sumPair += number;
-  });
+  .reduce((acc, x) => {
+    return (acc += x);
+  }, 0);
 
-alert(`TASK #7\nSum of positive pair numbers ${sumPair}`);
+alert(`TASK #7\nSum of positive pair numbers ${sumPairElem}`);
 
 // task 8
 
-let sumNoPair = 0;
-
-const taskEightArr = arr
+const sumNoPairElem = arr
   .filter((x) => x > 0 && x % 2 !== 0)
-  .map((number) => {
-    sumNoPair += number;
-  });
+  .reduce((acc, x) => {
+    return (acc += x);
+  }, 0);
 
-alert(`TASK #8\nSum of positive no-pair numbers ${sumNoPair}`);
+alert(`TASK #8\nSum of positive not pair numbers ${sumNoPairElem}`);
 
 // task 9
 
-let product = 1;
-
-const taskNineArr = arr
+const productPositiveElem = arr
   .filter((x) => x > 0)
-  .forEach((number) => {
-    product *= number;
-  });
+  .reduce((acc, x) => {
+    return (acc *= x);
+  }, 1);
 
-alert(`TASK #9\nProduct of positive numbers ${product}`);
+alert(`TASK #9\nProduct of positive numbers ${productPositiveElem}`);
 
 // task 10
 
-const taskTenArr = arr.map((x) => {
-  if (x !== max) {
+const newArr = arr.map((x) => {
+  if (x !== maxElem) {
     x = 0;
+    return x;
+  } else {
+    return x;
   }
-  return x;
 });
 
-alert(`TASK #10\n${taskTenArr}`);
+alert(`TASK #10\n${newArr}`);
