@@ -1,17 +1,18 @@
 // ================== Homework #10 ==================
 
-function RandomInt(max) {
-  return Math.floor(Math.random() * max);
-}
-
-function generateKey(length, characters) {
-  let key = "";
-  for (let i = 0; i < length; i++) {
-    key += characters[RandomInt(characters.length)];
+function removeElement(array, item) {
+  let arr = [];
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] !== item) {
+      arr.push(array[i]);
+    }
   }
-  return key;
+  return arr;
 }
 
-const characters = "abcdefghijklmnopqrstuvwxyz1234567890";
-const yourKey = generateKey(10, characters);
-console.log(yourKey);
+arr = [1, 2, 3, 4, 5, 6, 7];
+
+const arrNew = removeElement(arr, 4);
+
+console.log(arr);
+console.log(arrNew);
