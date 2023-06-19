@@ -1,13 +1,19 @@
-// ================== Homework #15 ==================
+// ================== Homework #16 ==================
 
-function getSum() {
-  let sum = 0;
-  return function (number) {
-    return (sum += number);
-  };
-}
+let ladder = {
+  step: 0,
+  up: function () {
+    this.step++;
+    return this;
+  },
+  down: function () {
+    this.step--;
+    return this;
+  },
+  showStep: function () {
+    alert(this.step);
+    return this;
+  },
+};
 
-let sum = getSum();
-console.log(sum(3));
-console.log(sum(5));
-console.log(sum(20));
+console.log(ladder.up().up().up().showStep().down().showStep());
