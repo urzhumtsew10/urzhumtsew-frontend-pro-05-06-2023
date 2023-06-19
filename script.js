@@ -1,11 +1,13 @@
-// ================== Homework #14 ==================
+// ================== Homework #15 ==================
 
-function pow(num, degree) {
-  if (degree == 1) {
-    return num;
-  } else {
-    return num * pow(num, degree - 1);
-  }
+function getSum() {
+  let sum = 0;
+  return function (number) {
+    return (sum += number);
+  };
 }
 
-console.log(pow(2, 5));
+let sum = getSum();
+console.log(sum(3));
+console.log(sum(5));
+console.log(sum(20));
