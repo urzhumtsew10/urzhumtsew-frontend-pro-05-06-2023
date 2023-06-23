@@ -1,57 +1,67 @@
-// ================== Homework #17 ==================
+// ================== Homework #18 ==================
 
 class Person {
-  constructor(name, age) {
+  constructor(name, gender) {
     this.name = name;
-    this.age = age;
-  }
-  getPersonalData() {
-    return `My name is ${this.name}.I'm ${this.age}`;
+    this.gender = gender;
   }
 }
 
-class Auto {
-  constructor(brand, model, date, licenseplate) {
-    this.brand = brand;
-    this.model = model;
-    this.date = date;
-    this.licenseplate = licenseplate;
+class Apartment {
+  /* я тут использовал конструктор , так как только он для каждого экземпляра класса создает отдельный массив 
+  я до этого пробывал через static, но там он записывал все в один массив не разделяв их по разным квартирам,домам*/
+  constructor() {
+    this.residents = [];
   }
-  assignOwner(owner) {
-    if (owner instanceof Person && owner.age >= 18) {
-      this.owner = owner;
-    } else {
-      console.log("This owner is't 18 and more!");
+  addToAppartment(person) {
+    if (person instanceof Person) {
+      this.residents.push(person);
     }
   }
 
-  getInfoCar() {
-    let message;
-    if (!this.owner) {
-      message = "Car don't have owner";
-    } else {
-      message = `${this.owner.getPersonalData()}`;
-    }
-    return `Car:\n${this.brand}(brand), ${this.model}(model)\n${this.date}(year released), ${this.licenseplate}(number plate)\nOwner: ${message}\n\n\n`;
+  getInfo() {
+    return this.residents;
   }
 }
 
-const person1 = new Person("Mike", 20);
-const auto1 = new Auto("Mercedes", "Maybach", 2022, "BH0707CA");
+class House {
+  constructor(sizeHouse) {
+    this.sizeHouse = sizeHouse;
+    this.flats = [];
+  }
 
-const person2 = new Person("John", 11);
-const auto2 = new Auto("BMW", "M5", 2018, "BH3019CO");
+  addToHouse(flat) {
+    if (flat instanceof Apartment && this.flats.length < this.sizeHouse) {
+      this.flats.push(flat);
+    } else {
+      console.log("The house is full");
+    }
+  }
 
-const person3 = new Person("Tom", 21);
-const auto3 = new Auto("Nissan", "Versa", 2019, "BH1323CA");
+  getInfo() {
+    return this.flats;
+  }
+}
 
-console.log(person1.getPersonalData());
-auto1.assignOwner(person1);
-console.log(auto1.getInfoCar());
+const person = new Person("Anton", "male");
+const person2 = new Person("Andrew", "male");
+const person3 = new Person("Vadim", "male");
+const person4 = new Person("Inna", "female");
 
-console.log(person2.getPersonalData());
-auto2.assignOwner(person2);
-console.log(auto2.getInfoCar());
+const apartmentOne = new Apartment();
+const apartmentTwo = new Apartment();
+const apartmentThree = new Apartment();
 
-console.log(person3.getPersonalData());
-console.log(auto3.getInfoCar());
+const houseOne = new House(2);
+
+apartmentOne.addToAppartment(person);
+apartmentTwo.addToAppartment(person2);
+apartmentOne.addToAppartment(person3);
+apartmentThree.addToAppartment(person4);
+
+houseOne.addToHouse(apartmentOne);
+houseOne.addToHouse(apartmentTwo);
+
+console.log(houseOne.getInfo());
+
+houseOne.addToHouse(apartmentThree);
