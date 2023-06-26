@@ -1,67 +1,102 @@
 // ================== Homework #18 ==================
 
-class Person {
-  constructor(name, gender) {
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
+const today = new Date();
+const currentYear = today.getFullYear();
+
+class Student {
+  constructor(name, surname, birthYear) {
     this.name = name;
-    this.gender = gender;
-  }
-}
-
-class Apartment {
-  /* я тут использовал конструктор , так как только он для каждого экземпляра класса создает отдельный массив 
-  я до этого пробывал через static, но там он записывал все в один массив не разделяв их по разным квартирам,домам*/
-  constructor() {
-    this.residents = [];
-  }
-  addToAppartment(person) {
-    if (person instanceof Person) {
-      this.residents.push(person);
-    }
+    this.surname = surname;
+    this.birthYear = birthYear;
   }
 
-  getInfo() {
-    return this.residents;
-  }
-}
+  attendingLesson = new Array(25);
+  evaluations = [];
 
-class House {
-  constructor(sizeHouse) {
-    this.sizeHouse = sizeHouse;
-    this.flats = [];
+  getAge() {
+    return currentYear - Number(this.birthYear);
   }
 
-  addToHouse(flat) {
-    if (flat instanceof Apartment && this.flats.length < this.sizeHouse) {
-      this.flats.push(flat);
+  present() {
+    if (this.attendingLesson.includes(undefined)) {
+      this.attendingLesson.shift();
+      this.attendingLesson.push(true);
+      this.evaluations.push(getRandomInt(10, 100));
     } else {
-      console.log("The house is full");
+      console.log("The array already has 25 records");
     }
   }
 
-  getInfo() {
-    return this.flats;
+  absent() {
+    if (this.attendingLesson.includes(undefined)) {
+      this.attendingLesson.shift();
+      this.attendingLesson.push(false);
+    } else {
+      console.log("The array already has 25 records");
+    }
+  }
+
+  getAverageScore() {
+    const sumScores = this.evaluations.reduce((acc, x) => {
+      return (acc += x);
+    }, 0);
+
+    return sumScores / this.evaluations.length;
+  }
+
+  summary() {
+    const visits = this.attendingLesson
+      .filter((x) => x === true)
+      .reduce((acc, x) => {
+        return (acc += 1);
+      }, 0);
+
+    const numberOfLessons = this.attendingLesson.filter(
+      (x) => x === true || x === false
+    ).length;
+
+    if (visits / numberOfLessons >= 0.9 && this.getAverageScore() >= 90) {
+      console.log(`${this.name}, well done!`);
+    } else if (visits / numberOfLessons < 0.9 && this.getAverageScore() < 90) {
+      console.log(`${this.name}, Radish!`);
+    } else if (visits / numberOfLessons < 0.9 || this.getAverageScore() < 90) {
+      console.log(`${this.name}, Good, but can better.`);
+    }
   }
 }
 
-const person = new Person("Anton", "male");
-const person2 = new Person("Andrew", "male");
-const person3 = new Person("Vadim", "male");
-const person4 = new Person("Inna", "female");
+const student = new Student("Ivan", "Ivanov", 2006);
+console.log(student.getAge());
+student.present();
+student.present();
+student.present();
+student.present();
+student.present();
+student.present();
+student.present();
+student.present();
+student.present();
+student.absent();
+console.log(student.evaluations);
+console.log(student.getAverageScore());
+student.summary();
 
-const apartmentOne = new Apartment();
-const apartmentTwo = new Apartment();
-const apartmentThree = new Apartment();
-
-const houseOne = new House(2);
-
-apartmentOne.addToAppartment(person);
-apartmentTwo.addToAppartment(person2);
-apartmentOne.addToAppartment(person3);
-apartmentThree.addToAppartment(person4);
-
-houseOne.addToHouse(apartmentOne);
-houseOne.addToHouse(apartmentTwo);
-
-console.log(houseOne.getInfo());
-
-houseOne.addToHouse(apartmentThree);
+const student2 = new Student("Petr", "Petrov", 2002);
+console.log(student2.getAge());
+student2.present();
+student2.present();
+student2.present();
+student2.absent();
+student2.present();
+student2.present();
+student2.absent();
+student2.present();
+student2.present();
+student2.absent();
+console.log(student2.evaluations);
+console.log(student2.getAverageScore());
+student2.summary();
