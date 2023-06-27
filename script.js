@@ -1,80 +1,58 @@
-// ================== Homework #19 ==================
+// ================== Homework #20 ==================
 
-class Hamburger {
-  constructor(size, stuffing) {
-    this.size = size;
-    this.stuffing = stuffing;
-  }
-
-  static SIZE_SMALL = {
-    calories: 20,
-    price: 50,
-  };
-  static SIZE_BIG = {
-    calories: 40,
-    price: 100,
-  };
-
-  static STUFFING_CHEESE = {
-    calories: 20,
-    price: 10,
-  };
-  static STUFFING_SALAD = {
-    calories: 5,
-    price: 20,
-  };
-  static STUFFING_POTATO = {
-    calories: 10,
-    price: 15,
-  };
-
-  static TOPPING_MOYO = {
-    calories: 5,
-    price: 20,
-  };
-  static TOPPING_SAUCE = {
-    calories: 0,
-    price: 15,
-  };
-
-  addTopping(topping) {
-    this.topping = {
-      calories: topping.calories,
-      price: topping.price,
-    };
-  }
-
-  calculate() {
-    if (this.topping) {
-      return (
-        this.size.calories + this.stuffing.calories + this.topping.calories
-      );
+class SuperMath {
+  input() {
+    const newX = prompt("Enter new X");
+    const newY = prompt("Enter new Y");
+    let newZnak = prompt("Enter new Znak");
+    while (!["+", "-", "*", "/", "%"].includes(newZnak)) {
+      newZnak = prompt("Enter new Znak. + - * / %");
     }
-    return this.size.calories + this.stuffing.calories;
+    obj.x = newX;
+    obj.y = newY;
+    obj.znak = newZnak;
+    return obj;
   }
 
-  calculatePrice() {
-    if (this.topping) {
-      return this.size.price + this.stuffing.price + this.topping.price + "$";
+  calculate(obj) {
+    switch (obj.znak) {
+      case "+":
+        return obj.x + obj.y;
+        break;
+      case "-":
+        return obj.x - obj.y;
+        break;
+      case "*":
+        return obj.x * obj.y;
+        break;
+      case "/":
+        return obj.x / obj.y;
+        break;
+      case "%":
+        return obj.x % obj.y;
+        break;
     }
-    return this.size.price + this.stuffing.price + "$";
   }
 }
 
-const hamburger = new Hamburger(
-  Hamburger.SIZE_SMALL,
-  Hamburger.STUFFING_CHEESE
-);
+const obj = {
+  x: 12,
+  y: 2,
+  znak: "-",
+};
 
-console.log(hamburger.calculate());
-console.log(hamburger.calculatePrice());
+SuperMath.prototype.check = function (obj) {
+  const answer = prompt(
+    `Do you want to do action ${obj.znak} with ${obj.x} and ${obj.y}? (YES OR NO)`
+  );
+  if (answer.toLowerCase() === "no") {
+    const newObj = this.input();
+    console.log(this.calculate(newObj));
+  }
+  if (answer.toLowerCase() === "yes") {
+    console.log(this.calculate(obj));
+  }
+};
 
-hamburger.addTopping(Hamburger.TOPPING_MOYO);
-
-console.log(hamburger.calculate());
-console.log(hamburger.calculatePrice());
-
-hamburger.addTopping(Hamburger.TOPPING_SAUCE);
-
-console.log(hamburger.calculate());
-console.log(hamburger.calculatePrice());
+const p = new SuperMath();
+p.check(obj);
