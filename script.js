@@ -8,10 +8,11 @@ class SuperMath {
     while (!["+", "-", "*", "/", "%"].includes(newZnak)) {
       newZnak = prompt("Enter new Znak. + - * / %");
     }
-    obj.x = newX;
-    obj.y = newY;
-    obj.znak = newZnak;
-    return obj;
+    const inputObj = {};
+    inputObj.x = newX;
+    inputObj.y = newY;
+    inputObj.znak = newZnak;
+    return inputObj;
   }
 
   calculate(obj) {
@@ -56,3 +57,5 @@ SuperMath.prototype.check = function (obj) {
 
 const p = new SuperMath();
 p.check(obj);
+
+console.log(obj);
