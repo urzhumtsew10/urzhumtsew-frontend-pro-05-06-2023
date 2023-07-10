@@ -10,6 +10,10 @@ const images = [
   "./images/3.jpg",
   "./images/4.jpg",
   "./images/5.jpg",
+  "./images/6.jpg",
+  "./images/7.jpg",
+  "./images/8.jpg",
+  "./images/9.jpg",
 ];
 
 const img = document.createElement("img");
@@ -17,10 +21,10 @@ const btn = document.querySelector(".btn");
 
 img.width = 900;
 img.height = 600;
-img.src = images[generationRandomInt(5)];
+img.src = images[generationRandomInt(9)];
 
 btn.before(img);
 
 btn.addEventListener("click", () => {
-  img.src = images[generationRandomInt(5)];
+  img.src = images[generationRandomInt(9)];
 });
