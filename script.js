@@ -1,22 +1,26 @@
-// ================== Homework #22 ==================
+// ================== Homework #23 ==================
 
-const title = document.querySelector("h1");
-const table = document.createElement("table");
-title.after(table);
-
-// table marking
-
-for (let i = 0; i < 10; i++) {
-  const line = document.createElement("tr");
-  table.insertAdjacentElement("beforeend", line);
-  for (let j = 0; j < 10; j++) {
-    const cell = document.createElement("td");
-    line.insertAdjacentElement("beforeend", cell);
-  }
+function generationRandomInt(max) {
+  return Math.floor(Math.random() * max);
 }
 
-const allCell = document.querySelectorAll("td");
+const images = [
+  "./images/1.jpg",
+  "./images/2.jpg",
+  "./images/3.jpg",
+  "./images/4.jpg",
+  "./images/5.jpg",
+];
 
-for (let i = 0; i < 100; i++) {
-  allCell[i].innerText = i + 1;
-}
+const img = document.createElement("img");
+const btn = document.querySelector(".btn");
+
+img.width = 900;
+img.height = 600;
+img.src = images[generationRandomInt(5)];
+
+btn.before(img);
+
+btn.addEventListener("click", () => {
+  img.src = images[generationRandomInt(5)];
+});
