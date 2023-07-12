@@ -1,12 +1,23 @@
-// ================== Homework #24 ==================
+// ================== Homework #25 ==================
 
-const input = document.querySelector("input");
-const block = document.querySelector("div");
+let firstLink = prompt("Enter first link");
+if (!firstLink.includes("http") && !firstLink.includes("https")) {
+  firstLink = `https://${firstLink}`;
+}
+let secondLink = prompt("Enter second link");
+if (!secondLink.includes("http") && !secondLink.includes("https")) {
+  secondLink = `https://${secondLink}`;
+}
 
-input.onfocus = () => {
-  block.style.display = "block";
-};
+const btnOne = document.querySelector(".btn-1");
+const btnTwo = document.querySelector(".btn-2");
+const blockBtn = document.querySelector("div");
 
-input.onblur = () => {
-  block.style.display = "none";
-};
+blockBtn.addEventListener("click", (e) => {
+  if (e.target.innerText === "First link") {
+    window.open(`${firstLink}`);
+  }
+  if (e.target.innerText === "Second link") {
+    window.open(`${secondLink}`);
+  }
+});
