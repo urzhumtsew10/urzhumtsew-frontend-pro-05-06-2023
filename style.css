@@ -2,22 +2,32 @@
   padding: 0;
   margin: 0;
 }
-button {
-  cursor: pointer;
-  width: 100px;
-  height: 40px;
-  background-color: cornsilk;
-  border: 1px solid rgb(255, 225, 105);
-  margin-right: 20px;
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-button:hover {
-  transition: 0.3s;
-  font-weight: 600;
-  box-shadow: 0px 6px 10px rgb(0, 0, 0, 0.6);
-  border-radius: 0.5vw;
-}
-div {
+.voting {
+  margin-top: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.emojiBlock {
+  margin-right: 10px;
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.emojiBlock__img {
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+}
+.photo {
+  width: 1000px;
+  height: 600px;
 }
