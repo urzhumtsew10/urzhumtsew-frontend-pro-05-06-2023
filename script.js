@@ -37,14 +37,12 @@ generateEmoji(obj);
 const emojiBlock = document.querySelectorAll(".emojiBlock");
 const count = document.querySelectorAll(".emojiBlock__count");
 
-emojiBlock.forEach((elem) => {
-  elem.addEventListener("click", (e) => {
-    if (e.target.nodeName === "IMG") {
-      count.forEach((count) => {
-        if (count.id === e.target.id) {
-          count.innerText = +count.innerText + 1;
-        }
-      });
-    }
-  });
+blockVoting.addEventListener("click", (e) => {
+  if (e.target.nodeName === "IMG") {
+    count.forEach((count) => {
+      if (count.id === e.target.id) {
+        count.innerText = +count.innerText + 1;
+      }
+    });
+  }
 });
