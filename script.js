@@ -52,8 +52,6 @@ function generateProducts(array, filters) {
   }
 }
 
-generateProducts(productsData, categories);
-
 const aboutProduct = document.querySelector(".aboutProduct");
 
 blockProducts.addEventListener("click", (e) => {
@@ -109,7 +107,7 @@ popup.addEventListener("click", (e) => {
     checkboxes.forEach((elem) => {
       elem.checked = false;
     });
-    generateProducts(productsData, categories);
+    generateProducts(productsData, []);
   }
 });
 
