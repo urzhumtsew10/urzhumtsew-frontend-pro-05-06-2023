@@ -42,37 +42,11 @@
 }
 .regContent {
   width: 600px;
-  height: 500px;
+  height: 600px;
   background-color: #fff;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.info {
-  display: flex;
-  flex-direction: column;
-}
-.block-info {
-  display: flex;
-}
-.user-name {
-  margin-right: 30px;
-}
-.birthday {
-  margin-right: 30px;
-}
-#city {
-  width: 165px;
-}
-.margin-top {
-  margin-top: 15px;
-}
-
-.col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-right: 15px;
 }
 .submit-reg {
   border: none;
@@ -96,4 +70,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+textarea {
+  resize: none;
 }

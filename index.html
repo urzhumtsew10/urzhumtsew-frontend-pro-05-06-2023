@@ -12,85 +12,67 @@
       <button class="registration">Registration</button>
     </header>
     <div class="blockRegistration">
-      <div class="regContent">
+      <form class="regContent">
         <h2 class="reg-title">Registration Form</h2>
-        <div class="block-info">
-          <div class="info">
-            <label for="name">Your Name:</label>
-            <input id="name" type="text" class="user-name reg" />
-          </div>
-          <div class="info">
-            <label for="surname">Your Surname:</label>
-            <input id="surname" type="text" class="user-surname reg" />
-          </div>
-        </div>
-        <div class="block-info margin-top">
-          <div class="info">
-            <label for="birthday">Your Birthday:</label>
-            <input id="birthday" type="text" class="birthday reg" />
-          </div>
-          <div class="info">
-            <label for="city">Your City:</label>
-            <select id="city" class="reg">
-              <option value="Odessa">Odessa</option>
-              <option value="London">London</option>
-              <option value="Liverpool">Liverpool</option>
-              <option value="Madrid">Madrid</option>
-              <option value="Rome">Rome</option>
-            </select>
-          </div>
-        </div>
-        <div class="block-info margin-top">
-          <h3>Genger:</h3>
-          <div class="col">
-            <label for="man">Man</label>
-            <input
-              value="man"
-              id="man"
-              name="gender"
-              type="radio"
-              class="reg"
-            />
-          </div>
-          <div class="col">
-            <label for="woman">Woman</label>
-            <input
-              value="woman"
-              id="woman"
-              name="gender"
-              type="radio"
-              class="reg"
-            />
-          </div>
-        </div>
-        <div class="block-info margin-top">
-          <h3>Landuages:</h3>
-          <div class="col">
-            <label for="english">English</label>
-            <input value="English" type="checkbox" id="english" class="reg" />
-          </div>
-          <div class="col">
-            <label for="ukrainian">Ukrainian</label>
-            <input
-              value="Ukrainian"
-              type="checkbox"
-              id="ukrainian"
-              class="reg"
-            />
-          </div>
-          <div class="col">
-            <label for="german">German</label>
-            <input value="German" type="checkbox" id="german" class="reg" />
-          </div>
-        </div>
-        <div class="block-info margin-top">
-          <div class="col">
-            <label for="adress">Your Adress:</label>
-            <textarea id="adress" cols="30" rows="10" class="reg"></textarea>
-          </div>
-        </div>
+        <label for="name">Your Name:</label>
+        <input id="name" name="name" type="text" class="user-name" />
+
+        <label for="surname">Your Surname:</label>
+        <input id="surname" name="surname" type="text" class="user-surname" />
+
+        <label for="birthday">Your Birthday:</label>
+        <input id="birthday" name="birthday" type="text" class="birthday" />
+
+        <label for="city">Your City:</label>
+        <select id="city" name="city">
+          <option value="Odessa">Odessa</option>
+          <option value="London">London</option>
+          <option value="Liverpool">Liverpool</option>
+          <option value="Madrid">Madrid</option>
+          <option value="Rome">Rome</option>
+        </select>
+
+        <h3>Genger:</h3>
+
+        <label for="man">Man</label>
+        <input value="man" id="man" name="gender" type="radio" />
+
+        <label for="woman">Woman</label>
+        <input value="woman" id="woman" name="gender" type="radio" />
+
+        <h3>Landuages:</h3>
+        <label for="english">English</label>
+        <input
+          value="English"
+          name="language"
+          type="checkbox"
+          id="english"
+          class="checkbox"
+        />
+
+        <label for="ukrainian">Ukrainian</label>
+        <input
+          value="Ukrainian"
+          name="language"
+          type="checkbox"
+          id="ukrainian"
+          class="checkbox"
+        />
+
+        <label for="german">German</label>
+        <input
+          value="German"
+          name="language"
+          type="checkbox"
+          id="german"
+          class="checkbox"
+        />
+
+        <label for="adress">Your Adress:</label>
+        <textarea id="adress" name="adress" cols="30" rows="5"></textarea>
+
         <button class="submit-reg">Keep</button>
-      </div>
+      </form>
     </div>
     <script src="./script.js" type="module"></script>
   </body>
