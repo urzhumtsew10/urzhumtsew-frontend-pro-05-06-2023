@@ -1,60 +1,301 @@
-// ================== Homework #31 ==================
-const registrationBtn = document.querySelector(".registration");
-const blockRegistration = document.querySelector(".blockRegistration");
-const formElem = document.querySelector(".regContent");
-const checkboxes = document.querySelectorAll(".checkbox");
+// ================== Homework #32 ==================
+import { productsData } from "./data.js";
 
-registrationBtn.addEventListener("click", () => {
-  blockRegistration.style.display = "flex";
+// Block Filter
+
+const blockCategory = document.querySelector(".category");
+function createFilter(array) {
+  for (let i = 0; i < array.length; i++) {
+    blockCategory.insertAdjacentHTML(
+      "beforeend",
+      `
+        <form>
+          <label class="checkbox-label">
+            <input class="checkbox" value="${array[i]}" type="checkbox" />
+            ${array[i]}
+          </label>
+        </form>
+        `
+    );
+  }
+  blockCategory.insertAdjacentHTML(
+    "beforeend",
+    `<button class="filter-btn">Apply</button>`
+  );
+}
+const categories = ["Shoes", "Clothes", "Food", "Technique"];
+createFilter(categories);
+
+// Main block called "Products"
+
+const blockProducts = document.querySelector(".products");
+function generateProducts(array, filters) {
+  blockProducts.innerHTML = "";
+  for (let i = 0; i < array.length; i++) {
+    filters.forEach((categ) => {
+      if (categ === array[i].category) {
+        blockProducts.insertAdjacentHTML(
+          "beforeend",
+          `
+    <div class="card">
+          <div id="${array[i].id}" class="cover"></div>
+          <img class="card__img" src="./images/${array[i].img}" />
+          <div class="params">
+            <h3 class="params__title">${array[i].title}</h3>
+            <p class="params__price">${array[i].price}</p>
+          </div>
+        </div>
+    `
+        );
+      }
+    });
+  }
+}
+
+// Block about product
+
+const aboutProduct = document.querySelector(".aboutProduct");
+const infoProduct = document.querySelector(".infoProduct");
+let paramsProduct = {};
+blockProducts.addEventListener("click", (e) => {
+  aboutProduct.classList.add("active-about");
+  productsData.forEach((elem) => {
+    if (elem.id === +e.target.id) {
+      infoProduct.insertAdjacentHTML(
+        "afterbegin",
+        `
+      <span>X</span>
+      <img src="./images/${elem.img}" class="about__img" />
+        <div class="about__block">
+          <h4 class="about__title">${elem.description}</h4>
+          <div class="about__descr">
+            <div class="descr__price">
+              <p class="text">price:</p>
+              <h4 class="price">${elem.price}</h4>
+            </div>
+            <div class="descr__from">
+              <p class="text">country:</p>
+              <h4 class="country">${elem.country}</h4>
+            </div>
+          </div>
+          <button class="buy">Buy</button>
+        </div>
+      `
+      );
+      const date = new Date();
+      paramsProduct = {
+        date:
+          String(date.getDate()) +
+          "/" +
+          String(date.getMonth() + 1) +
+          "/" +
+          String(date.getFullYear()),
+        img: elem.img,
+        description: elem.description,
+        price: elem.price,
+        country: elem.country,
+      };
+    }
+  });
 });
 
-blockRegistration.addEventListener("click", (e) => {
-  if (e.target.classList.value === "blockRegistration") {
-    blockRegistration.style.display = "none";
+const getParamsProduct = () => {
+  return paramsProduct;
+};
+
+// info from Form "Buy"
+
+const orderForm = document.querySelector("#orderForm");
+aboutProduct.addEventListener("click", (e) => {
+  if (e.target.nodeName === "SPAN") {
+    aboutProduct.classList.remove("active-about");
+    infoProduct.innerHTML = "";
+    orderForm.style.display = "none";
+  }
+  if (e.target.nodeName === "BUTTON") {
+    orderForm.style.display = "flex";
   }
 });
 
-formElem.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const formData = new FormData(formElem);
+const getFormData = () => {
+  const formData = new FormData(document.querySelector("#orderForm"));
   const entries = formData.entries();
   const data = Object.fromEntries(entries);
-  const dataBoxes = [];
-  checkboxes.forEach((box) => {
-    if (box.checked) {
-      dataBoxes.push(box.value);
+
+  const message = document.querySelector(".message");
+  const popupContent = document.querySelector(".popup__content");
+
+  if (
+    data["money"] === undefined ||
+    data["name"] === "" ||
+    data["quantity"] <= 0
+  ) {
+    orderForm.classList.add("error-form");
+    message.style.display = "block";
+  } else {
+    orderForm.classList.remove("error-form");
+    message.style.display = "none";
+    aboutProduct.classList.remove("active-about");
+    infoProduct.innerHTML = "";
+    popup.style.display = "flex";
+    popupContent.innerHTML = "";
+    popupContent.insertAdjacentHTML(
+      "beforeend",
+      `<h2>Date: ${data.name}</h2>
+        <p>Quantity: ${data.quantity}</p>
+        <p>City: ${data.city}</p>
+        <p>Delivery: in ${data.post}</p>`
+    );
+    document.body.style.overflow = "hidden";
+
+    return data;
+  }
+};
+
+const contentOrdersBlock = document.querySelector(".content-orders");
+
+const updateYourOrders = () => {
+  contentOrdersBlock.innerHTML = "";
+  const dataProductsArray = JSON.parse(localStorage.getItem("dataProducts"));
+  for (const data of dataProductsArray) {
+    contentOrdersBlock.insertAdjacentHTML(
+      "beforeend",
+      `<div class="yourOrders__case">
+        <img id="${dataProductsArray.indexOf(
+          data
+        )}" class="case__img margin-right" src="./images/${data.img}" />
+        <h4 id="${dataProductsArray.indexOf(
+          data
+        )}" class="case__name margin-right">${data.date}</h4>
+        <p id="${dataProductsArray.indexOf(
+          data
+        )}" class="case__quantity margin-right">Quantity: ${data.quantity}</p>
+        <p id="${dataProductsArray.indexOf(
+          data
+        )}" class="case__price margin-right">Price: ${data.price}</p>
+        <button id="${dataProductsArray.indexOf(
+          data
+        )}" class="case__delete">delete</button>
+      </div>`
+    );
+  }
+};
+
+const dataStorage = localStorage.getItem("dataProducts")
+  ? JSON.parse(localStorage.getItem("dataProducts"))
+  : [];
+const submit = document.querySelector(".submit");
+submit.addEventListener("click", (e) => {
+  e.preventDefault();
+  const arrayData = JSON.parse(localStorage.getItem("dataProducts"));
+  arrayData.push(Object.assign(getFormData(), getParamsProduct()));
+  localStorage.setItem("dataProducts", JSON.stringify(arrayData));
+});
+
+// Pop-up
+const popup = document.querySelector(".popup");
+popup.addEventListener("click", (e) => {
+  if (e.target.classList.value === "popup") {
+    document.body.style.overflow = "auto";
+    popup.style.display = "none";
+    aboutProduct.classList.remove("active-about");
+    infoProduct.innerHTML = "";
+    orderForm.style.display = "none";
+
+    checkboxes.forEach((elem) => {
+      elem.checked = false;
+    });
+    generateProducts(productsData, []);
+  }
+});
+
+// filter
+const checkboxes = document.querySelectorAll(".checkbox");
+const openFilter = document.querySelector(".filter-btn");
+
+openFilter.addEventListener("click", () => {
+  let categoryArray = [];
+  checkboxes.forEach((elem) => {
+    if (elem.checked) {
+      categoryArray.push(elem.value);
     }
   });
-  formElem.innerHTML = "";
-  formElem.insertAdjacentHTML(
-    "beforeend",
-    `
-   <table>
-      <tr>
-        <td>Your Full name:<td>
-        <td>${data.name} ${data.surname}<td>
-      </tr>
-      <tr>
-        <td>Your Birthday:<td>
-        <td>${data.birthday}<td>
-      </tr>
-      <tr>
-        <td>Your city:<td>
-        <td>${data.city}<td>
-      </tr>
-      <tr>
-        <td>Your Gender:<td>
-        <td>${data.gender}<td>
-      </tr>
-      <tr>
-        <td>You khow languages, such as:<td>
-        <td>${dataBoxes}<td>
-      </tr>
-      <tr>
-        <td>Youк adress:<td>
-        <td>${data.adress}<td>
-      </tr>
-    </table>
-  `
-  );
+  if (categoryArray.length === 0) {
+    categoryArray = categories;
+  }
+  generateProducts(productsData, categoryArray);
+});
+
+// Your Orders
+const blockYourOrders = document.querySelector(".yourOrders");
+const buttonOrders = document.querySelector(".header__btn");
+const closeBlockOrders = document.querySelector(".close-orders");
+
+buttonOrders.addEventListener("click", () => {
+  blockYourOrders.style.display = "block";
+  updateYourOrders();
+});
+
+blockYourOrders.addEventListener("click", (e) => {
+  if (e.target.nodeName === "BUTTON") {
+    const buttonsDelete = document.querySelectorAll(".case__delete");
+    buttonsDelete.forEach((btn) => {
+      const dataProductsArray = JSON.parse(
+        localStorage.getItem("dataProducts")
+      );
+      btn.addEventListener("click", () => {
+        const newDataStorage = dataProductsArray.filter((n) => {
+          return n !== dataProductsArray[btn.id];
+        });
+        localStorage.setItem("dataProducts", JSON.stringify(newDataStorage));
+
+        updateYourOrders();
+      });
+    });
+  }
+  if (e.target.classList.value.includes("margin-right")) {
+    const viewProduct = document.querySelector(".view");
+    viewProduct.innerHTML = "";
+    const productInfo = dataStorage[e.target.id];
+    viewProduct.style.right = "0";
+    viewProduct.insertAdjacentHTML(
+      "beforeend",
+      `<span class="close">X</span>
+      <img src="./images/${productInfo.img}" class="about__img" />
+        <div class="about__block">
+          <h4 class="about__title">${productInfo.description}</h4>
+          <div class="about__descr">
+            <div class="descr__price">
+              <p class="text">price:</p>
+              <h4 class="price">${productInfo.price}</h4>
+            </div>
+            <div class="descr__from">
+              <p class="text">country:</p>
+              <h4 class="country">${productInfo.country}</h4>
+            </div>
+          </div>
+          <div class="about__descr">
+            <div class="descr__price">
+              <p class="text">quantity:</p>
+              <h4 class="price">${productInfo.quantity}</h4>
+            </div>
+            <div class="descr__from">
+              <p class="text">date:</p>
+              <h4 class="country">${productInfo.date}</h4>
+            </div>
+          </div>
+        </div>`
+    );
+    viewProduct.addEventListener("click", (e) => {
+      if (e.target.nodeName === "SPAN") {
+        viewProduct.style.right = "-100%";
+      }
+    });
+  }
+});
+
+blockYourOrders.addEventListener("click", (e) => {
+  if (e.target.nodeName === "SPAN") {
+    blockYourOrders.style.display = "none";
+  }
 });
