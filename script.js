@@ -1,6 +1,10 @@
 // ================== Homework #32 ==================
 import { productsData } from "./data.js";
 
+const getDataProductsFromStorage = () => {
+  return JSON.parse(localStorage.getItem("dataProducts"));
+};
+
 // Block Filter
 
 const blockCategory = document.querySelector(".category");
@@ -156,40 +160,28 @@ const contentOrdersBlock = document.querySelector(".content-orders");
 
 const updateYourOrders = () => {
   contentOrdersBlock.innerHTML = "";
-  const dataProductsArray = JSON.parse(localStorage.getItem("dataProducts"));
-  for (const data of dataProductsArray) {
+  const dataProductsArray = getDataProductsFromStorage();
+  for (let i = 0; i < dataProductsArray.length; i++) {
     contentOrdersBlock.insertAdjacentHTML(
       "beforeend",
       `<div class="yourOrders__case">
-        <img id="${dataProductsArray.indexOf(
-          data
-        )}" class="case__img margin-right" src="./images/${data.img}" />
-        <h4 id="${dataProductsArray.indexOf(
-          data
-        )}" class="case__name margin-right">${data.date}</h4>
-        <p id="${dataProductsArray.indexOf(
-          data
-        )}" class="case__quantity margin-right">Quantity: ${data.quantity}</p>
-        <p id="${dataProductsArray.indexOf(
-          data
-        )}" class="case__price margin-right">Price: ${data.price}</p>
-        <button id="${dataProductsArray.indexOf(
-          data
-        )}" class="case__delete">delete</button>
+        <img id="${i}" class="case__img margin-right" src="./images/${dataProductsArray[i].img}" />
+        <h4 id="${i}" class="case__name margin-right">${dataProductsArray[i].date}</h4>
+        <p id="${i}" class="case__quantity margin-right">Quantity: ${dataProductsArray[i].quantity}</p>
+        <p id="${i}" class="case__price margin-right">Price: ${dataProductsArray[i].price}</p>
+        <button id="${i}" class="case__delete">delete</button>
       </div>`
     );
   }
 };
 
-const dataStorage = localStorage.getItem("dataProducts")
-  ? JSON.parse(localStorage.getItem("dataProducts"))
-  : [];
+const dataStorage = getDataProductsFromStorage() || [];
 const submit = document.querySelector(".submit");
 submit.addEventListener("click", (e) => {
   e.preventDefault();
-  const arrayData = JSON.parse(localStorage.getItem("dataProducts"));
-  arrayData.push(Object.assign(getFormData(), getParamsProduct()));
-  localStorage.setItem("dataProducts", JSON.stringify(arrayData));
+  const dataProductsArray = getDataProductsFromStorage();
+  dataProductsArray.push(Object.assign(getFormData(), getParamsProduct()));
+  localStorage.setItem("dataProducts", JSON.stringify(dataProductsArray));
 });
 
 // Pop-up
@@ -240,9 +232,7 @@ blockYourOrders.addEventListener("click", (e) => {
   if (e.target.nodeName === "BUTTON") {
     const buttonsDelete = document.querySelectorAll(".case__delete");
     buttonsDelete.forEach((btn) => {
-      const dataProductsArray = JSON.parse(
-        localStorage.getItem("dataProducts")
-      );
+      const dataProductsArray = getDataProductsFromStorage();
       btn.addEventListener("click", () => {
         const newDataStorage = dataProductsArray.filter((n) => {
           return n !== dataProductsArray[btn.id];
