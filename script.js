@@ -1,77 +1,51 @@
-let getId = prompt("Enter id post (from 1 to 100)");
+const city = document.querySelector("#city");
+const temp = document.querySelector("#temp");
+const pressure = document.querySelector("#pressure");
+const description = document.querySelector("#description");
+const humidity = document.querySelector("#humidity");
+const speed = document.querySelector("#speed");
+const deg = document.querySelector("#deg");
+const imgWeather = document.querySelector("#img");
+const inputCity = document.querySelector(".input-city");
+const searchWeather = document.querySelector(".submit");
+const app = document.querySelector(".app-weather");
+const formSearch = document.querySelector(".form");
 
-while (getId === null || getId.trim() === "" || +getId < 1 || +getId > 100) {
-  getId = prompt("Enter id post (from 1 to 100)");
-}
+searchWeather.addEventListener("click", () => {
+  const weatherCity = inputCity.value.toUpperCase();
 
-const divPost = document.querySelector(".post");
-const titlePost = document.querySelector(".post-title");
-const userId = document.querySelector(".userId");
-const descrPost = document.querySelector(".post-body");
-const btnGetComments = document.querySelector(".comment-btn");
-const blockComments = document.querySelector(".post-comments");
-
-const getPost = new Promise((resolve, reject) => {
-  const request = new XMLHttpRequest();
-
-  request.onload = () => {
-    if (request.status === 200) {
-      resolve(JSON.parse(request.responseText));
-    } else {
-      reject("something went wrong");
-    }
-  };
-
-  request.open("GET", `https://jsonplaceholder.typicode.com/posts/${getId}`);
-  request.send();
-});
-
-getPost.then((value) => {
-  divPost.style.display = "block";
-  titlePost.innerText = value.title;
-  userId.innerText = `UserId: ${value.userId}`;
-  descrPost.innerText = value.body;
-});
-
-getPost.catch((err) => {
-  console.log(`Error: ${err}`);
-});
-
-btnGetComments.addEventListener("click", () => {
-  blockComments.innerHTML = "";
-
-  const getComments = new Promise((resolve, reject) => {
+  app.style.display = "grid";
+  formSearch.style.display = "none";
+  const getWeatherInfo = new Promise((resolve, reject) => {
     const request = new XMLHttpRequest();
+
+    const url = `http://api.openweathermap.org/data/2.5/weather?q=${weatherCity}&units=metric&APPID=5d066958a60d315387d9492393935c19`;
 
     request.onload = () => {
       if (request.status === 200) {
         resolve(JSON.parse(request.responseText));
       } else {
-        reject("something went wrong");
+        reject("Not found City");
       }
     };
 
-    request.open(
-      "GET",
-      `https://jsonplaceholder.typicode.com/posts/${getId}/comments`
-    );
+    request.open("GET", url);
     request.send();
+  }).then((data) => {
+    city.innerText = data.name;
+    temp.innerText = `${Math.round(data.main.temp)}°C`;
+    pressure.innerText = `${data.main.pressure} hPa`;
+    description.innerText = data.weather[0].description;
+    humidity.innerText = `${data.main.humidity}%`;
+    speed.innerText = `${data.wind.speed} km/h`;
+    deg.innerText = `${data.wind.deg}°C`;
+    imgWeather.src = `http://openweathermap.org/img/w/${data.weather[0].icon}.png`;
+    console.log(data);
   });
-
-  getComments.then((value) => {
-    value.forEach((comment) => {
-      blockComments.insertAdjacentHTML(
-        "beforeend",
-        `<div class="comment">
-        <h2 class="name-comment">${comment.name}</h2>
-        <p class="email-comment">${comment.email}</p>
-        <p class="body-comment">${comment.body}</p>
-      </div>`
-      );
-    });
-  });
-
-  getComments.catch((err) => {
-    console.log(`Error: ${err}`);
+  getWeatherInfo.catch((err) => {
+    app.style.display = "none";
+    inputCity.value = "Not Found This City!";
+    formSearch.style.display = "flex";
+    reject("Something went wrong", err);
   });
 });

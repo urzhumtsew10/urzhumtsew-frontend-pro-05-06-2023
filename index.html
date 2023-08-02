@@ -8,13 +8,30 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <div class="post">
-      <h2 class="post-title"></h2>
-      <p class="userId"></p>
-      <div class="post-body"></div>
-      <button class="comment-btn">Get Comments</button>
+    <div class="form">
+      <input
+        class="input-city"
+        type="text"
+        value=""
+        placeholder="Enter City"
+      /><button class="submit">Search</button>
     </div>
-    <div class="post-comments"></div>
+    <div class="app-weather">
+      <div class="app-row">
+        <img id="img" src="" />
+        <h3 id="city"></h3>
+        <p id="temp"></p>
+      </div>
+      <div class="app-row">
+        <p class="app-detail">pressure: <span id="pressure"></span></p>
+        <p class="app-detail">descr: <span id="description"></span></p>
+        <p class="app-detail">humidity: <span id="humidity"></span></p>
+      </div>
+      <div class="app-row">
+        <p class="app-detail">speed: <span id="speed"></span></p>
+        <p class="app-detail">deg: <span id="deg"></span></p>
+      </div>
+    </div>
     <script src="./script.js" type="module"></script>
   </body>
 </html>
