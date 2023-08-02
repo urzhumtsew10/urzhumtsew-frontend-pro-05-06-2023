@@ -8,92 +8,13 @@
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <header class="header">
-      <button class="header__btn">Your Orders</button>
-    </header>
-    <div class="yourOrders">
-      <span class="close-orders">X</span>
-      <h2 class="order">Your Orders</h2>
-      <div class="content-orders"></div>
-      <div class="view"></div>
+    <div class="post">
+      <h2 class="post-title"></h2>
+      <p class="userId"></p>
+      <div class="post-body"></div>
+      <button class="comment-btn">Get Comments</button>
     </div>
-    <div class="popup">
-      <div class="popup__content"></div>
-    </div>
-    <h1>Homework #30</h1>
-    <div class="store">
-      <div class="category"></div>
-      <div class="products"></div>
-      <div class="aboutProduct">
-        <div class="infoProduct"></div>
-        <p class="message">Fill out the form correctly</p>
-        <form id="orderForm">
-          <div class="form-container">
-            <label class="form" for="full-name">Full Name</label>
-            <input name="name" value="" type="text" id="full-name" />
-          </div>
-          <div class="form-container small">
-            <div class="formBox">
-              <label class="form" for="your-city">Your City</label>
-              <select name="city" id="your-city">
-                <option value="Odessa">Odessa</option>
-                <option value="Kharkiv">Kharkiv</option>
-                <option value="New York">New York</option>
-                <option value="London">London</option>
-                <option value="Paris">Paris</option>
-                <option value="Istanbul">Istanbul</option>
-              </select>
-            </div>
-            <div class="formBox">
-              <div class="form-container">
-                <label class="form" for="counter">Quantity</label>
-                <input name="quantity" value="" type="number" id="counter" />
-              </div>
-            </div>
-          </div>
-          <div class="form-container post-office">
-            <label class="form" for="post-division">Post Division</label>
-            <select name="post" id="post-division">
-              <option value="post office number 30">
-                Post office №30(Uspenskaya street)
-              </option>
-              <option value="post office number 59">
-                Post office №59(Sergey Grecevca street)
-              </option>
-              <option value="post office number 129">
-                Post office №129(Negenskay street)
-              </option>
-              <option value="post office number 61">
-                Post office №61(Fountain Road 1 street)
-              </option>
-            </select>
-          </div>
-          <div class="form-container radio">
-            <div class="radio-form">
-              <input type="radio" name="money" value="cash" id="cash" />
-              <label class="form" for="cash">Payment in Cash</label>
-            </div>
-            <div class="form-container radio">
-              <div class="radio-form">
-                <input type="radio" name="money" value="card" id="card" />
-                <label class="form" for="card">Payment by Card</label>
-              </div>
-            </div>
-          </div>
-          <label id="label-comment" for="comment"
-            >Your Comment(not necessarily)</label
-          >
-          <textarea
-            id="comment"
-            name="comment"
-            value=""
-            cols="30"
-            rows="10"
-          ></textarea>
-          <input class="submit" type="submit" value="submit" />
-        </form>
-      </div>
-    </div>
+    <div class="post-comments"></div>
     <script src="./script.js" type="module"></script>
   </body>
 </html>
