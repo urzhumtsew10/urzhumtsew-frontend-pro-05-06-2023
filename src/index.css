@@ -1,13 +1,61 @@
-body {
+* {
+  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.main-block {
+  width: 100%;
+  height: 600px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+header {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #bdbdbd;
+}
+.navigation {
+  width: 150px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  display: flex;
+  background-color: rgb(184, 179, 247);
+}
+.main {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.content-part {
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #7083a4;
+}
+.title-part {
+  font-size: 60px;
+  margin-bottom: 15px;
+  color: #353841;
+}
+.description-part {
+  width: 900px;
+  font-size: 25px;
+}
+.navigation-item {
+  list-style: none;
+  font-size: 40px;
+  margin-top: 30px;
+  margin-left: 20px;
+}
+.navigation-item:hover {
+  text-decoration: underline;
+  font-weight: 600;
 }
