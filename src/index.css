@@ -2,60 +2,85 @@
   padding: 0;
   margin: 0;
 }
-.main-block {
+body {
   width: 100%;
+  height: 100vh;
+  background-color: rgb(38, 38, 38);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.app {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 1000px;
   height: 600px;
-  background-color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: #fff;
+  border-radius: 0.7vw;
+  box-shadow: 0px 4px 20px rgba(255, 255, 255, 0.795);
 }
-header {
-  height: 70px;
+.block_voting {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #bdbdbd;
 }
-.navigation {
-  width: 150px;
+.emojiBox {
+  margin-left: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.emojiBox:first-child {
+  margin-left: 0;
+}
+.boxImg {
+  cursor: pointer;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 5px;
+}
+.boxCounter {
+  font-family: cursive;
+  font-size: 20px;
+}
+.app_btn {
+  cursor: pointer;
+  position: absolute;
+  bottom: 40px;
+  width: 240px;
+  height: 55px;
+  border: none;
+  border-radius: 1vw;
+  font-size: 23px;
+  font-family: monospace;
+  font-weight: 600;
+  background: rgb(255, 200, 18);
+}
+.app_btn:hover {
+  transition: 0.3s;
+  border: 1px solid rgb(255, 200, 18);
+  background-color: white;
+  color: rgb(255, 200, 18);
+  box-shadow: 0px 0px 16px rgba(255, 255, 0, 0.642);
+}
+.modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  background-color: rgb(0, 0, 0, 0.7);
   position: fixed;
+  z-index: 3;
   top: 0;
   left: 0;
-  height: 100vh;
-  display: flex;
-  background-color: rgb(184, 179, 247);
 }
-.main {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-}
-.content-part {
-  width: 100%;
-  height: 90vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #7083a4;
-}
-.title-part {
-  font-size: 60px;
-  margin-bottom: 15px;
-  color: #353841;
-}
-.description-part {
-  width: 900px;
-  font-size: 25px;
-}
-.navigation-item {
-  list-style: none;
-  font-size: 40px;
-  margin-top: 30px;
-  margin-left: 20px;
-}
-.navigation-item:hover {
-  text-decoration: underline;
-  font-weight: 600;
+.modal_content {
+  width: 1000px;
+  height: 600px;
+  background-color: #fff;
+  border-radius: 1vw;
 }
