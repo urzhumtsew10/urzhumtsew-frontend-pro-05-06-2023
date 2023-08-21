@@ -1,17 +1,15 @@
-import { useState } from "react";
-
 const EmojiBox = (props) => {
-  const [count, setCount] = useState(0);
-
-  const updateCount = () => {
-    setCount(count + 1);
-  };
-
+  const counter = props.count.filter((emoji) => emoji.name === props.name)[0]
+    .counter;
   return (
     <div className="emojiBox">
-      <img onClick={updateCount} className="boxImg" src={props.img} />
+      <img
+        onClick={() => props.onClickHandler(props.name)}
+        className="boxImg"
+        src={props.img}
+      />
       <p id={props.name} className="boxCounter">
-        {count}
+        {counter}
       </p>
     </div>
   );

@@ -8,33 +8,51 @@ import { useState } from "react";
 
 const App = () => {
   const emojiData = [
-    { img: emoji_love, name: "emoji-love" },
-    { img: emoji_smile, name: "emoji-smile" },
-    { img: emoji_surprised, name: "emoji-surprised" },
-    { img: emoji_funny, name: "emoji-funny" },
+    { img: emoji_love, name: "emoji-love", counter: 0 },
+    { img: emoji_smile, name: "emoji-smile", counter: 0 },
+    { img: emoji_surprised, name: "emoji-surprised", counter: 0 },
+    { img: emoji_funny, name: "emoji-funny", counter: 0 },
   ];
 
-  const getRes = () => {
-    emojiData.forEach((emoji) => {
-      emoji.count = Number(document.getElementById(emoji.name).innerText);
-    });
-    const maxValue = emojiData
-      .map((emoji) => emoji.count)
+  const [counters, setCounter] = useState(emojiData);
+  const [data, setData] = useState(emojiData);
+
+  const clickImg = (name) => {
+    const counter = counters.filter((count) => count.name === name)[0];
+    counter.counter += 1;
+    const newCounters = counters.reduce((acc, count) => {
+      if (count.name !== name) {
+        acc.push(count);
+      } else {
+        acc.push(counter);
+      }
+      return acc;
+    }, []);
+    setCounter(newCounters);
+  };
+
+  const getResults = () => {
+    const maxValue = counters
+      .map((count) => count.counter)
       .sort((a, b) => b - a)[0];
-    const winner = emojiData.filter((emoji) => emoji.count === maxValue);
-    winner.forEach((elem) => {
-      document.getElementById(elem.name).innerText = `WINNER (${elem.count})`;
-    });
+    const winner = counters.filter((count) => count.counter === maxValue);
+    setData(winner);
   };
 
   return (
     <div className="app">
       <div className="block_voting">
-        {emojiData.map((emoji) => (
-          <EmojiBox key={emoji.name} name={emoji.name} img={emoji.img} />
+        {data.map((emoji) => (
+          <EmojiBox
+            onClickHandler={clickImg}
+            key={emoji.name}
+            name={emoji.name}
+            img={emoji.img}
+            count={counters}
+          />
         ))}
       </div>
-      <button onClick={getRes} className="app_btn">
+      <button onClick={getResults} className="app_btn">
         Show Results
       </button>
     </div>
