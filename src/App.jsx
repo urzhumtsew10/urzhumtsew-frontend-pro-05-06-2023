@@ -1,60 +1,73 @@
-import emoji_love from "../img/emoji-love.svg";
-import emoji_funny from "../img/emoji-funny.svg";
-import emoji_smile from "../img/emoji-smile.svg";
-import emoji_surprised from "../img/emoji-surprised.svg";
+import { useState, useEffect } from "react";
+import iconLoading from "../img/loading.gif";
 
-import EmojiBox from "./EmojiBox";
-import { useState } from "react";
+import Contact from "./Contcact";
+import FormContact from "./FormContact";
 
 const App = () => {
-  const emojiData = [
-    { img: emoji_love, name: "emoji-love", counter: 0 },
-    { img: emoji_smile, name: "emoji-smile", counter: 0 },
-    { img: emoji_surprised, name: "emoji-surprised", counter: 0 },
-    { img: emoji_funny, name: "emoji-funny", counter: 0 },
-  ];
+  const [list, setList] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+  const [useForm, setState] = useState(false);
 
-  const [counters, setCounter] = useState(emojiData);
-  const [data, setData] = useState(emojiData);
+  const url = "https://jsonplaceholder.typicode.com/users";
 
-  const clickImg = (name) => {
-    const counter = counters.filter((count) => count.name === name)[0];
-    counter.counter += 1;
-    const newCounters = counters.reduce((acc, count) => {
-      if (count.name !== name) {
-        acc.push(count);
-      } else {
-        acc.push(counter);
-      }
-      return acc;
-    }, []);
-    setCounter(newCounters);
+  const loading = isLoading && <img src={iconLoading} />;
+
+  useEffect(() => {
+    fetch(url)
+      .then((res) => res.json())
+      .then((res) => setList(res));
+    setLoading(false);
+  }, []);
+
+  const deleteContact = (id) => {
+    const newList = list.filter((person) => person.id !== id);
+    setList(newList);
   };
 
-  const getResults = () => {
-    const maxValue = counters
-      .map((count) => count.counter)
-      .sort((a, b) => b - a)[0];
-    const winner = counters.filter((count) => count.counter === maxValue);
-    setData(winner);
+  const activeFormContact = () => {
+    setState(true);
+  };
+
+  const cancelForm = () => {
+    setState(false);
+  };
+
+  const createNewContact = (values) => {
+    if (values.name !== "" && values.surname !== "" && values.phone !== "") {
+      const name = values.name + " " + values.surname;
+      const id = Math.random();
+      setList([...list, { name: name, id: id, phone: values.phone }]);
+      setState(false);
+    }
   };
 
   return (
-    <div className="app">
-      <div className="block_voting">
-        {data.map((emoji) => (
-          <EmojiBox
-            onClickHandler={clickImg}
-            key={emoji.name}
-            name={emoji.name}
-            img={emoji.img}
-            count={counters}
-          />
-        ))}
-      </div>
-      <button onClick={getResults} className="app_btn">
-        Show Results
+    <div>
+      {loading}
+      <table className="tableContacts">
+        <tbody>
+          {list.map((person) => (
+            <Contact
+              id={person.id}
+              deleteContact={deleteContact}
+              key={person.name}
+              name={person.name.split(" ")[0]}
+              surname={person.name.split(" ")[1]}
+              phone={person.phone}
+            />
+          ))}
+        </tbody>
+      </table>
+      <button onClick={activeFormContact} className="button">
+        Add New Contact
       </button>
+      {useForm && (
+        <FormContact
+          cancelForm={cancelForm}
+          createNewContact={createNewContact}
+        />
+      )}
     </div>
   );
 };
