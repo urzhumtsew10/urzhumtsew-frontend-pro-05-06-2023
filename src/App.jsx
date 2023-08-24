@@ -7,17 +7,17 @@ import FormContact from "./FormContact";
 const App = () => {
   const [list, setList] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [useForm, setState] = useState(false);
+  const [showForm, setFormShow] = useState(false);
 
   const url = "https://jsonplaceholder.typicode.com/users";
-
-  const loading = isLoading && <img src={iconLoading} />;
 
   useEffect(() => {
     fetch(url)
       .then((res) => res.json())
-      .then((res) => setList(res));
-    setLoading(false);
+      .then((res) => {
+        setList(res);
+        setLoading(false);
+      });
   }, []);
 
   const deleteContact = (id) => {
@@ -26,11 +26,11 @@ const App = () => {
   };
 
   const activeFormContact = () => {
-    setState(true);
+    setFormShow(true);
   };
 
   const cancelForm = () => {
-    setState(false);
+    setFormShow(false);
   };
 
   const createNewContact = (values) => {
@@ -38,13 +38,13 @@ const App = () => {
       const name = values.name + " " + values.surname;
       const id = Math.random();
       setList([...list, { name: name, id: id, phone: values.phone }]);
-      setState(false);
+      setFormShow(false);
     }
   };
 
   return (
     <div>
-      {loading}
+      {isLoading && <img src={iconLoading} />}
       <table className="tableContacts">
         <tbody>
           {list.map((person) => (
@@ -62,7 +62,7 @@ const App = () => {
       <button onClick={activeFormContact} className="button">
         Add New Contact
       </button>
-      {useForm && (
+      {showForm && (
         <FormContact
           cancelForm={cancelForm}
           createNewContact={createNewContact}

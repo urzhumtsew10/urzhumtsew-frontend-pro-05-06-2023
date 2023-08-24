@@ -1,21 +1,19 @@
 import { useState } from "react";
 
 const FormContact = ({ cancelForm, createNewContact }) => {
-  const [values, setValue] = useState({
-    name: "",
-    surname: "",
-    phone: "",
-  });
-  const getValue = (e) => {
+  const [userName, setName] = useState("");
+  const [userSurname, setSurname] = useState("");
+  const [userPhone, setPhone] = useState("");
+  const installationValues = (e) => {
     switch (e.target.id) {
       case "name":
-        setValue({ ...values, name: e.target.value });
+        setName(e.target.value);
         break;
       case "surname":
-        setValue({ ...values, surname: e.target.value });
+        setSurname(e.target.value);
         break;
       case "phone":
-        setValue({ ...values, phone: e.target.value });
+        setPhone(e.target.value);
         break;
     }
   };
@@ -25,15 +23,21 @@ const FormContact = ({ cancelForm, createNewContact }) => {
       <div className="form__content">
         <form action="form">
           <label htmlFor="name">Name:</label>
-          <input id="name" type="text" onChange={getValue} />
+          <input id="name" type="text" onChange={installationValues} />
           <label htmlFor="surname">Surname:</label>
-          <input id="surname" type="text" onChange={getValue} />
+          <input id="surname" type="text" onChange={installationValues} />
           <label htmlFor="phone">Phone:</label>
-          <input id="phone" type="phone" onChange={getValue} />
+          <input id="phone" type="phone" onChange={installationValues} />
         </form>
         <div className="form__actions">
           <button
-            onClick={() => createNewContact(values)}
+            onClick={() =>
+              createNewContact({
+                name: userName,
+                surname: userSurname,
+                phone: userPhone,
+              })
+            }
             className="action_btn btn-apply"
           >
             Apply
