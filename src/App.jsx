@@ -1,73 +1,40 @@
-import { useState, useEffect } from "react";
-import iconLoading from "../img/loading.gif";
+import { useState, useEffect, useRef } from "react";
 
-import Contact from "./Contcact";
-import FormContact from "./FormContact";
+import Todo from "./Todo";
 
 const App = () => {
-  const [list, setList] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-  const [showForm, setFormShow] = useState(false);
+  const yourThings = [
+    { title: "Clean garden" },
+    { title: "Clean home" },
+    { title: "Help my father" },
+  ];
 
-  const url = "https://jsonplaceholder.typicode.com/users";
+  const inputRef = useRef("");
+  const [list, setList] = useState(yourThings);
 
-  useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((res) => {
-        setList(res);
-        setLoading(false);
-      });
-  }, []);
-
-  const deleteContact = (id) => {
-    const newList = list.filter((person) => person.id !== id);
-    setList(newList);
-  };
-
-  const activeFormContact = () => {
-    setFormShow(true);
-  };
-
-  const cancelForm = () => {
-    setFormShow(false);
-  };
-
-  const createNewContact = (values) => {
-    if (values.name !== "" && values.surname !== "" && values.phone !== "") {
-      const name = values.name + " " + values.surname;
-      const id = Math.random();
-      setList([...list, { name: name, id: id, phone: values.phone }]);
-      setFormShow(false);
-    }
+  const getInputValue = () => {
+    setList([...list, { title: `${inputRef.current.value}` }]);
+    inputRef.current.value = "";
   };
 
   return (
-    <div>
-      {isLoading && <img src={iconLoading} />}
-      <table className="tableContacts">
-        <tbody>
-          {list.map((person) => (
-            <Contact
-              id={person.id}
-              deleteContact={deleteContact}
-              key={person.name}
-              name={person.name.split(" ")[0]}
-              surname={person.name.split(" ")[1]}
-              phone={person.phone}
-            />
-          ))}
-        </tbody>
-      </table>
-      <button onClick={activeFormContact} className="button">
-        Add New Contact
-      </button>
-      {showForm && (
-        <FormContact
-          cancelForm={cancelForm}
-          createNewContact={createNewContact}
+    <div className="app">
+      <ul className="blockTodoLists">
+        {list.map((thing) => {
+          return <Todo key={Math.random()} title={thing.title} />;
+        })}
+      </ul>
+      <div className="app__addTodo">
+        <input
+          ref={inputRef}
+          className="addTodo__input"
+          type="text"
+          placeholder="write new todo..."
         />
-      )}
+        <button onClick={getInputValue} className="addTodo__btn">
+          Add Todo
+        </button>
+      </div>
     </div>
   );
 };
