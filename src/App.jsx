@@ -4,16 +4,22 @@ import Todo from "./Todo";
 
 const App = () => {
   const yourThings = [
-    { title: "Clean garden" },
-    { title: "Clean home" },
-    { title: "Help my father" },
+    { title: "Clean garden", id: 1 },
+    { title: "Clean home", id: 2 },
+    { title: "Help my father", id: 3 },
   ];
 
   const inputRef = useRef("");
   const [list, setList] = useState(yourThings);
 
-  const getInputValue = () => {
-    setList([...list, { title: `${inputRef.current.value}` }]);
+  const createNewTodo = () => {
+    const lastId = list[list.length - 1].id;
+    if (inputRef.current.value.trim("") !== "") {
+      setList([
+        ...list,
+        { title: `${inputRef.current.value}`, id: lastId + 1 },
+      ]);
+    }
     inputRef.current.value = "";
   };
 
@@ -21,7 +27,7 @@ const App = () => {
     <div className="app">
       <ul className="blockTodoLists">
         {list.map((thing) => {
-          return <Todo key={Math.random()} title={thing.title} />;
+          return <Todo key={thing.id} title={thing.title} />;
         })}
       </ul>
       <div className="app__addTodo">
@@ -31,7 +37,7 @@ const App = () => {
           type="text"
           placeholder="write new todo..."
         />
-        <button onClick={getInputValue} className="addTodo__btn">
+        <button onClick={createNewTodo} className="addTodo__btn">
           Add Todo
         </button>
       </div>
