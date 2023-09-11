@@ -13,7 +13,7 @@ if (!rootElement) {
 const root = createRoot(rootElement);
 
 root.render(
-  <BrowserRouter>
+  <StrictMode>
     <App />
-  </BrowserRouter>
+  </StrictMode>
 );
