@@ -1,6 +1,6 @@
 import { useController } from "react-hook-form";
 
-const NameForm = () => {
+const NameInput = () => {
   const { field, fieldState } = useController({ name: "name" });
   const { error } = fieldState;
   return (
@@ -12,4 +12,4 @@ const NameForm = () => {
   );
 };
 
-export default NameForm;
+export default NameInput;

@@ -12,7 +12,7 @@ const getPhoneTypeError = (type) => {
   }
 };
 
-const PhoneForm = () => {
+const PhoneInput = () => {
   const { field, fieldState } = useController({ name: "phone" });
   const { error } = fieldState;
   return (
@@ -26,4 +26,4 @@ const PhoneForm = () => {
   );
 };
 
-export default PhoneForm;
+export default PhoneInput;

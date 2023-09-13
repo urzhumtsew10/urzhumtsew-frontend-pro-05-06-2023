@@ -9,7 +9,7 @@ const getEmailTypeError = (type) => {
   }
 };
 
-const EmailForm = () => {
+const EmailInput = () => {
   const { field, fieldState } = useController({ name: "email" });
   const { error } = fieldState;
   return (
@@ -23,4 +23,4 @@ const EmailForm = () => {
   );
 };
 
-export default EmailForm;
+export default EmailInput;

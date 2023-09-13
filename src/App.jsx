@@ -1,7 +1,7 @@
 import { useForm, FormProvider } from "react-hook-form";
-import NameForm from "./NameForm";
-import EmailForm from "./EmailForm";
-import PhoneForm from "./PhoneForm";
+import NameInput from "./NameInput";
+import EmailInput from "./EmailInput";
+import PhoneInput from "./PhoneInput";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -34,9 +34,9 @@ const App = () => {
     <div className="app">
       <FormProvider {...formMethods}>
         <form onSubmit={handleSubmit(tryToLoginUser)} className="app__form">
-          <NameForm register={register} />
-          <EmailForm register={register} />
-          <PhoneForm register={register} />
+          <NameInput />
+          <EmailInput />
+          <PhoneInput />
           <button type="submit" className="app__btn">
             Submit
           </button>
