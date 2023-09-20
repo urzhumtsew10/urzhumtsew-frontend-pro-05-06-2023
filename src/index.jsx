@@ -30,7 +30,8 @@ const todoReducer = (state = initialState, action) => {
       });
       return { todoList: [...updateState] };
     case "ADD_TODO":
-      const lastId = todoList[todoList.length - 1].id;
+      const lastId = todoList.length ? todoList[todoList.length - 1].id : 0;
+
       return {
         todoList: [...todoList, { id: lastId + 1, title: action.title }],
       };
