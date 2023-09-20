@@ -1,47 +1,54 @@
-import { useForm, FormProvider } from "react-hook-form";
-import NameInput from "./NameInput";
-import EmailInput from "./EmailInput";
-import PhoneInput from "./PhoneInput";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-
-const validationSchema = yup.object().shape({
-  name: yup.string().required(),
-  email: yup.string().required().email(),
-  phone: yup
-    .string()
-    .matches(/^[0-9]+$/)
-    .required()
-    .length(12),
-});
+import { useSelector, useDispatch } from "react-redux";
+import Todo from "./Todo";
+import { useRef } from "react";
 
 const App = () => {
-  const formMethods = useForm({
-    resolver: yupResolver(validationSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      phone: "",
-    },
-  });
-  const { handleSubmit, register } = formMethods;
+  const inputRef = useRef();
 
-  const tryToLoginUser = (data) => {
-    alert(`Name: ${data.name}\nEmail: ${data.email}\nPhone: ${data.phone}`);
+  const todoList = useSelector((state) => state.todoList);
+  const dispatch = useDispatch();
+
+  const createTodo = () => {
+    const title = inputRef.current.value;
+    if (title.trim("") !== "") {
+      dispatch({ type: "ADD_TODO", title: title });
+    }
+    inputRef.current.value = "";
+  };
+
+  const completedTodo = (id, completed) => {
+    dispatch({ type: "TOGGLE_TODO", id: id, completed: completed });
+  };
+
+  const deleteTodo = (id) => {
+    dispatch({ type: "DELETE_TODO", id: id });
   };
 
   return (
     <div className="app">
-      <FormProvider {...formMethods}>
-        <form onSubmit={handleSubmit(tryToLoginUser)} className="app__form">
-          <NameInput />
-          <EmailInput />
-          <PhoneInput />
-          <button type="submit" className="app__btn">
-            Submit
-          </button>
-        </form>
-      </FormProvider>
+      <div className="app__form">
+        <input
+          ref={inputRef}
+          className="app__input"
+          type="text"
+          placeholder="write new todo..."
+        />
+        <button onClick={() => createTodo()} className="app__btn">
+          Add New Todo
+        </button>
+      </div>
+      <div className="app__todoBlock">
+        {todoList.map((todo) => (
+          <Todo
+            completedTodo={completedTodo}
+            deleteTodo={deleteTodo}
+            key={todo.id}
+            id={todo.id}
+            title={todo.title}
+            completed={todo.completed}
+          />
+        ))}
+      </div>
     </div>
   );
 };
