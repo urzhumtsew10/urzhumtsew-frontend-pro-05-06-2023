@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import Todo from "./Todo";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
+import axios from "axios";
 
 const App = () => {
   const inputRef = useRef();
@@ -8,20 +9,20 @@ const App = () => {
   const todoList = useSelector((state) => state.todoList);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    axios
+      .get("https://651283ceb8c6ce52b395bc33.mockapi.io/tasks")
+      .then((res) => {
+        dispatch({ type: "CREATE_TODOES", todoes: res.data });
+      });
+  }, [dispatch]);
+
   const createTodo = () => {
     const title = inputRef.current.value;
     if (title.trim("") !== "") {
       dispatch({ type: "ADD_TODO", title: title });
     }
     inputRef.current.value = "";
-  };
-
-  const completedTodo = (id, completed) => {
-    dispatch({ type: "TOGGLE_TODO", id: id, completed: completed });
-  };
-
-  const deleteTodo = (id) => {
-    dispatch({ type: "DELETE_TODO", id: id });
   };
 
   return (
@@ -40,8 +41,6 @@ const App = () => {
       <div className="app__todoBlock">
         {todoList.map((todo) => (
           <Todo
-            completedTodo={completedTodo}
-            deleteTodo={deleteTodo}
             key={todo.id}
             id={todo.id}
             title={todo.title}

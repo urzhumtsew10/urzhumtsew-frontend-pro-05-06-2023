@@ -1,7 +1,8 @@
-import { StrictMode } from "react";
+import { useEffect } from "react";
 import { createRoot } from "react-dom/client";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
+import thunk from "redux-thunk";
 import App from "./App";
 import "./index.css";
 
@@ -12,15 +13,15 @@ if (!rootElement) {
 }
 
 const initialState = {
-  todoList: [
-    { id: 1, title: "Clean garden", completed: false },
-    { id: 2, title: "Help dad", completed: false },
-  ],
+  todoList: [],
 };
 
 const todoReducer = (state = initialState, action) => {
   const todoList = state.todoList;
   switch (action.type) {
+    case "CREATE_TODOES":
+      return { todoList: [...action.todoes] };
+
     case "TOGGLE_TODO":
       const updateState = todoList.map((todo) => {
         if (todo.id === action.id) {
@@ -43,7 +44,7 @@ const todoReducer = (state = initialState, action) => {
   }
 };
 
-const root = createRoot(rootElement);
+const root = createRoot(rootElement, applyMiddleware(thunk));
 const store = createStore(todoReducer);
 
 root.render(
