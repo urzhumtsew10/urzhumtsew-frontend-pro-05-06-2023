@@ -10,10 +10,10 @@ const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    axios
-      .get("https://651283ceb8c6ce52b395bc33.mockapi.io/tasks")
-      .then((res) => {
-        dispatch({ type: "CREATE_TODOES", todoes: res.data });
+    fetch("https://651283ceb8c6ce52b395bc33.mockapi.io/tasks")
+      .then((res) => res.json())
+      .then((tasks) => {
+        dispatch({ type: "CREATE_TODOES", todoes: tasks });
       });
   }, [dispatch]);
 
