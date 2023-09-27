@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import Todo from "./Todo";
 import { useRef, useEffect } from "react";
-import axios from "axios";
 
 const App = () => {
   const inputRef = useRef();
@@ -9,13 +8,19 @@ const App = () => {
   const todoList = useSelector((state) => state.todoList);
   const dispatch = useDispatch();
 
+  const fetchTasks = () => {
+    return (dispatch) => {
+      fetch("https://651283ceb8c6ce52b395bc33.mockapi.io/tasks")
+        .then((res) => res.json())
+        .then((tasks) => {
+          dispatch({ type: "CREATE_TODOES", todoes: tasks });
+        });
+    };
+  };
+
   useEffect(() => {
-    fetch("https://651283ceb8c6ce52b395bc33.mockapi.io/tasks")
-      .then((res) => res.json())
-      .then((tasks) => {
-        dispatch({ type: "CREATE_TODOES", todoes: tasks });
-      });
-  }, [dispatch]);
+    dispatch(fetchTasks());
+  }, []);
 
   const createTodo = () => {
     const title = inputRef.current.value;

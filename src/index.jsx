@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
@@ -44,8 +43,8 @@ const todoReducer = (state = initialState, action) => {
   }
 };
 
-const root = createRoot(rootElement, applyMiddleware(thunk));
-const store = createStore(todoReducer);
+const root = createRoot(rootElement);
+const store = createStore(todoReducer, applyMiddleware(thunk));
 
 root.render(
   <Provider store={store}>
